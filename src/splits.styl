@@ -1,0 +1,90 @@
+@import 'nib'
+  
+resizer-width = 5px
+resizer-color = #333
+
+module-padding = 7px
+  
+.layout
+  width 50%
+  height 50%
+  box-shadow 0 0 0 3px #333
+  
+  &.event
+    user-select none
+  &.v-resize
+    cursor ew-resize
+  &.h-resize
+    cursor ns-resize
+  
+  .module
+    padding module-padding
+  
+  .pane
+  .module
+    box-sizing border-box
+    position relative
+    overflow hidden
+    
+    &:last-child
+      > .gutter
+        display none
+        
+    > .gutter
+      background resizer-color
+      position absolute
+      bottom 0
+      right 0
+      z-index 1
+  
+.horizontal
+  > .module
+  > .pane
+    > .gutter
+      top 0
+      width resizer-width
+      cursor ew-resize
+      &::after
+        writing-mode vertical-lr
+        bottom resizer-width
+  
+.vertical
+  > .module
+  > .pane
+    > .gutter
+      left 0
+      height resizer-width
+      cursor ns-resize
+      
+      &::after
+        right resizer-width
+      
+  
+.vertical
+.horizontal
+  float left  
+  width 100%
+  height 100%
+  
+  > .module
+  > .pane
+    float left  
+    width 100%
+    height 100%
+    
+    > .gutter
+      overflow hidden
+      font-size resizer-width
+      text-align center
+        
+      if light(resizer-color)
+        color #333
+      else
+        color #fff
+      
+      &::after
+        content '|||||'
+        display block
+        position absolute
+        left 0
+        top 0
