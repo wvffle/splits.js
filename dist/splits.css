@@ -1,0 +1,95 @@
+.layout {
+  width: 50%;
+  height: 50%;
+  -webkit-box-shadow: 0 0 0 3px #333;
+  box-shadow: 0 0 0 3px #333;
+}
+.layout.event {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.layout.v-resize {
+  cursor: ew-resize;
+}
+.layout.h-resize {
+  cursor: ns-resize;
+}
+.layout .module {
+  padding: 7px;
+}
+.layout .pane,
+.layout .module {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+}
+.layout .pane:last-child > .gutter,
+.layout .module:last-child > .gutter {
+  display: none;
+}
+.layout .pane > .gutter,
+.layout .module > .gutter {
+  background: #333;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  z-index: 1;
+}
+.horizontal > .module > .gutter,
+.horizontal > .pane > .gutter {
+  top: 0;
+  width: 5px;
+  cursor: ew-resize;
+}
+.horizontal > .module > .gutter::after,
+.horizontal > .pane > .gutter::after {
+  writing-mode: vertical-lr;
+  bottom: 5px;
+}
+.vertical > .module > .gutter,
+.vertical > .pane > .gutter {
+  left: 0;
+  height: 5px;
+  cursor: ns-resize;
+}
+.vertical > .module > .gutter::after,
+.vertical > .pane > .gutter::after {
+  right: 5px;
+}
+.vertical,
+.horizontal {
+  float: left;
+  width: 100%;
+  height: 100%;
+}
+.vertical > .module,
+.horizontal > .module,
+.vertical > .pane,
+.horizontal > .pane {
+  float: left;
+  width: 100%;
+  height: 100%;
+}
+.vertical > .module > .gutter,
+.horizontal > .module > .gutter,
+.vertical > .pane > .gutter,
+.horizontal > .pane > .gutter {
+  overflow: hidden;
+  font-size: 5px;
+  text-align: center;
+  color: #fff;
+}
+.vertical > .module > .gutter::after,
+.horizontal > .module > .gutter::after,
+.vertical > .pane > .gutter::after,
+.horizontal > .pane > .gutter::after {
+  content: '|||||';
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
