@@ -13,7 +13,7 @@ const layout = new Splits.Layout(document.body, {
     {
       direction: 'vertical',
       children: [
-        {
+        { // container with only 1 children
           children: [ 'You can create containers to set size' ],
           size: {
             min: 100,
