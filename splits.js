@@ -1,19 +1,33 @@
 (function(global) {
+  
+  // shorthands
   const H = 'horizontal';
   const V = 'vertical';
   const M = 'move';
   const D = 'drag';
+  
+  // functions
+  const elem = (...classes) => {
+    const res = document.createElement('div');
+    if (classes.length) res.className = classes.join(' ');
+    return res;
+  };
+  
+  const on = (element, event, handler) => {
+    return element.addEventListener(event, handler);
+  }
 
+  // Layout class
   class Layout {
     constructor(parent, data = {}) {
       this.data = data;
-      this.element = document.createElement('div');
-      this.element.classList.add('layout');
+      this.element = elem('layout');
 
       this.mode = null;
       this.moving = null;
 
-      document.addEventListener('mouseup', e => {
+      // remove all event data
+      on(document, 'mouseup', e => {
         this.mode = null;
         this.moving = null;
 
@@ -22,7 +36,10 @@
         this.element.classList.remove('h-resize');
       });
 
-      this.element.addEventListener('mousemove', e => {
+      // execute event
+      on(this.element, 'mousemove', e => {
+        
+        // drag event
         if (this.mode === D) {
           const parent = this.moving.parentElement;
           const rect = this.element.getBoundingClientRect();
@@ -73,15 +90,13 @@
       this.render();
     }
 
+    // render layout from data
     render(data, parent = {}) {
 
-      const element = document.createElement('div');
-      const gutter  = document.createElement('div');
-
+      const element = elem();
+      const gutter  = elem('gutter');
 
       element.appendChild(gutter);
-      gutter.classList.add('gutter');
-
 
       const siblings = parent.children == null || parent.children.length === 0 ? [null] : parent.children;
 
@@ -98,7 +113,8 @@
 
       element.data = data;
 
-      element.addEventListener('mousedown', e => {
+      // bind events
+      on(element, 'mousedown', e => {
         if (e.target === gutter) {
           if (data.direction === V) {
             this.element.classList.add('v-resize');
@@ -114,18 +130,17 @@
 
       });
 
-      if (typeof data === 'string' || data instanceof Element) {
+      if (typeof data === 'string') {
+        data = document.createTextNode(data);
+      }
+      
+      if (data instanceof Element || data instanceof Text) {
         element.classList.add('module');
-        if (typeof data === 'string') {
-          element.appendChild(document.createTextNode(data));
-        }
-
-        if (data instanceof Element) {
-          element.appendChild(data);
-        }
+        element.appendChild(data);
 
         return element;
       }
+      
       if (typeof data === 'object') {
         const direction = data.direction || H;
         element.classList.add(direction);
