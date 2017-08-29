@@ -158,8 +158,32 @@
     }
   };
   
+  // View class
+  class View {
+    constructor(opts) {
+      if (typeof opts === 'string' || opts instanceof Element) {
+        return new View({ children: [ opts ] });
+      }
+      
+      if (opts instanceof View) {
+        return opts;
+      }
+      
+      this.element = elem();
+      this.options = {
+        size: {
+          min: 30,
+          max: Infinity,
+        },
+        children: [],
+        ...opts,
+      }
+    }
+  }
+  
   global.Splits = {
     Layout,
+    View,
   };
   
 })(window);
